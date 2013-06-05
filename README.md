@@ -47,16 +47,7 @@ help
 ----
 
 ```
- ./abasket --help
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  _         _    _    
- | |__  ___| | _| |_   v0.1 written by Thomas Brand
- | '_ \/ __| |/ / __|  http://github.com/7890/bskt
- | |_) \__ \   <| |_   free software (LGPL/GPL)
- |_.__/|___/_|\_\___|  without any warranty
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+./abasket --help
 
 syntax: bskt <name of your basket>
   create an empty basket from the bskt bootstrap
