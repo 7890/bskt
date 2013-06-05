@@ -1,0 +1,125 @@
+#!/bin/bash
+
+#file: bskt.tmpl
+#part of bskt. see http://github.com/7890/bskt
+#//tb/130605
+
+#minify with cat bskt.tmpl | gzip -9 - | base64 -
+
+VERSION=0.1
+PROJECT_URL=http://github.com/7890/bskt
+
+if [ x"$1" = "x" ]
+then
+	echo -e 'need parameter.'
+	echo -e 'syntax: bskt <filename of new basket>'
+	echo -e "see "$PROJECT_URL
+	exit 1
+fi
+
+if [ x"$1" = "x-v" ]
+then
+	echo $VERSION
+	exit 0
+fi
+
+if [ x"$1" = "x--version" ]
+then
+	echo $VERSION
+	exit 0
+fi
+
+checkAvail()
+{
+	which "$1" >/dev/null 2>&1
+	ret=$?
+	if [ $ret -ne 0 ]
+	then
+		echo -e "tool \"$1\" not found. please install"
+		exit 1
+	fi
+}
+
+for tool in {xmlstarlet,md5sum,base64,gzip,sed,split,du,file,rev,cat,cut,head,chmod,touch}; \
+        do checkAvail "$tool"; done
+
+touch "$1"
+
+if [ ! -w "$1" ]
+then
+	echo -e "can't write to "$1
+	exit 1
+fi
+
+#write basket script to given file
+chmod 755 "$1"
+(cat | base64 -d - | gzip -d - > "$1") << _EOF_
+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
+5zYbnzOmEH3DJvwX2EiYrb42AAA=
+_EOF_
+echo "new basket created."

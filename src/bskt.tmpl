@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#file: bskt.tmpl
+#part of bskt. see http://github.com/7890/bskt
+#//tb/130605
+
+#minify with cat bskt.tmpl | gzip -9 - | base64 -
+
+VERSION=0.1
+PROJECT_URL=http://github.com/7890/bskt
+
+if [ x"$1" = "x" ]
+then
+	echo -e 'need parameter.'
+	echo -e 'syntax: bskt <filename of new basket>'
+	echo -e "see "$PROJECT_URL
+	exit 1
+fi
+
+if [ x"$1" = "x-v" ]
+then
+	echo $VERSION
+	exit 0
+fi
+
+if [ x"$1" = "x--version" ]
+then
+	echo $VERSION
+	exit 0
+fi
+
+checkAvail()
+{
+	which "$1" >/dev/null 2>&1
+	ret=$?
+	if [ $ret -ne 0 ]
+	then
+		echo -e "tool \"$1\" not found. please install"
+		exit 1
+	fi
+}
+
+for tool in {xmlstarlet,md5sum,base64,gzip,sed,split,du,file,rev,cat,cut,head,chmod,touch}; \
+        do checkAvail "$tool"; done
+
+touch "$1"
+
+if [ ! -w "$1" ]
+then
+	echo -e "can't write to "$1
+	exit 1
+fi
+
+#write basket script to given file
+chmod 755 "$1"
+(cat | base64 -d - | gzip -d - > "$1") << _EOF_
