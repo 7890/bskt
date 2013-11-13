@@ -1,16 +1,39 @@
 #!/bin/bash
 
+#if no parameter given, mainMethod() will be called
+
+#application specific notes (mainMethod)
+##########################################
+#
+#
+#
+#
+#
+
+#generic bskt
+##########################################
+
 #file: basket.sh
 #part of bskt. see http://github.com/7890/bskt
-#//tb/130604
+#//tb/130604//131113
 
-VERSION=0.1
+VERSION=0.2
 PROJECT_URL=http://github.com/7890/bskt
 
 #to create boostrap block:
 #cat <this script> | gzip -9 - | base64 -
 
 #need to support wildcards for add / dump
+
+##########################################
+mainMethod()
+{
+	#default action: none
+	echo -e "no parameters given and mainMethod not customized."
+	echo -e "see mainMethod in $0"
+	exit 0
+}
+##########################################
 
 checkAvail()
 {
@@ -130,7 +153,17 @@ DELIM="__delim__"
 ENCLOSE=`mktemp`
 echo "IyEvYmluL2Jhc2gKZWNobyAtZW4gIjwkQD4iCmNhdCAtCmVjaG8gLWVuICI8LyRAPiIK" | base64 -d - > "$ENCLOSE"
 chmod 755 "$ENCLOSE"
-#needs to be deleted
+#needs to be deleted on exit
+trap "rm -f $ENCLOSE" EXIT
+
+#########################################################
+# call mainMethod when no params given
+if [ x"$1" = "x" ]
+then
+        mainMethod
+fi
+#########################################################
+
 
 if [ x"$1" = "xhelp" ]
 then
@@ -256,16 +289,16 @@ then
 		#cat bskt.tmpl | gzip -9 - | base64 -
 
 		(cat | base64 -d - | gzip -d -> "$2") <<_EOF_
-H4sIAAGar1ECA41SXW/TQBB89v2KrRORVjrHNpCWtkkQQkECIYLCxwtBkWOv41POd5a9dlJK/zt3
-dqSEghB+Ot/N7szsTu/MXwvlr6MqY6yXCok3sK62NKS8kKxXRCWBTrsrqBAhIypufH8jKKvXw1jn
-/tWL68C3ANbzfVr74bPgMhiZbrlQIr2DnYFCHNGxL/yEzQ9RgHcNnjkbcrx8Dh5jX2eLT2/nHybB
-MGQfF/N3s9efV18W7yf/ImUihW+wd/uhCxNw9y58Z5ShYg7GmQYPYaAQEzBWohwJy+Hg5Km6UxTt
-O88wtv6VQVnLCndW2RZpelLg2hm4/RNx5m0vCEKWij+0eM0jNf2Dw0NR8Ncir8GyElr9T22cYbx9
-1URCnl+we+bsMhFn0Paa+gk2vqqlhKfTJyFzSqRJ/yVzWr6++QNPIQSGxeloji5JawlL02bpgtIE
-qa5VMoRCotkVCFVRJKVrKzrvjtHywFiqS2hLhYL7fS4NrJRIPE9GVZ3zbtHc7p5XmPCqkIJ4UnM7
-d15iw01MeFwTzzBKeJzlOuGk6zh7uIUlg8OXaDjaNl4to3trrhUy1sLbARwGewberhvI41y4caQG
-BLtSEBrZFvTbMnvdSxcCqOJSFGRxG9GgAquZtRLhajTqGM9tzI+BTtp4d1G352mLuoDxGFaz+ZsV
-+wULQR7afgMAAA==
+H4sIAJW2g1ICA51T227TQBB9znzF1IlIK61jpyUtbZMghIIAIYLC5YWgyLHH2VXXu5a9TlJK/51d
+OyVBSAXhF+/lnJlzZmfaR8FSqGAZlRygnQpJV7gsb0zPZLmEdh4VBnXaHGFJhNyY/CoIVsLwatmL
+dRZcPLsMAweAdhCYZdA/C8/DQWD//X7/zEbNhBLpLW4sBePI7OPjD1x9Fzn6l+jbtRVB50/RB/gy
+mX18M30/Cnun8GE2fTt5+WnxefZu9FhyKLnevCaZH5/AHbQo5hp9wq4iStD6iDIyVPS6B1flrTLR
+tjGMQ2deWZTzq2jj5NyQGR8QPFcAr3OgCO4BRIpfcet1+h6O0Nt6+A0MJwXQelBkI2yFwRBS8Qfc
+X/8iNHk6O/OPkvw1FaXQ6n+4fE/6J4E+t4i/cGJO8c2LdSRkU/0NFzHHOsY4SGgdqEpKPB0/6UOr
+IDPqPIdWnadjd+grwtAmaDUZ9vU2Wkuc2zBzD5U2mOpKJT3MJdlWQaFKE0npOYaTYmNbLfZFUl1g
+TRUK77aZtLBCkmFZMiirjDV9xlzrsZISVuZSGJZUzHUAK2jNbJeyuDKMU5SwmGc6YUZXMb+/xjng
+7ks07m1bry6jd22PFQHU8LoAu4Ieob9pCvLbizmXcaS6BjeFMGRlOxA8GHK1bTc3TTtiGRciNw63
+EmtS6DRDLREvBoMm47Gbsv08JfV0NZPm1uMadYLDIS4m01cL+Anies9lBQQAAA==
 _EOF_
 
 		#compressed version of this script

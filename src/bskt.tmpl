@@ -2,19 +2,25 @@
 
 #file: bskt.tmpl
 #part of bskt. see http://github.com/7890/bskt
-#//tb/130605
+#//tb/130605//131113
 
 #minify with cat bskt.tmpl | gzip -9 - | base64 -
 
-VERSION=0.1
+VERSION=0.2
 PROJECT_URL=http://github.com/7890/bskt
 
-if [ x"$1" = "x" ]
-then
+showHelp()
+{
 	echo -e 'need parameter.'
 	echo -e 'syntax: bskt <filename of new basket>'
 	echo -e "see "$PROJECT_URL
-	exit 1
+}
+
+if [ x"$1" = "x" ]
+then
+
+	showHelp
+	exit 0
 fi
 
 if [ x"$1" = "x-v" ]
@@ -26,6 +32,18 @@ fi
 if [ x"$1" = "x--version" ]
 then
 	echo $VERSION
+	exit 0
+fi
+
+if [ x"$1" = "x-h" ]
+then
+	showHelp
+	exit 0
+fi
+
+if [ x"$1" = "x--help" ]
+then
+	showHelp
 	exit 0
 fi
 
